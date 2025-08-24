@@ -1,0 +1,50 @@
+{
+    "manifest_version": 2,
+    "name": "Auto Text Search",
+    "version": "1.0.0",
+    "description": "Automatically search highlighted text with customizable hotkeys and search engines",
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "@auto-text-search"
+        }
+    },
+
+    "permissions": ["activeTab", "storage"],
+
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://*/*", "http://*/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "browser_action": {
+        "default_title": "Auto Text Search Settings",
+        "default_popup": "popup.html"
+    },
+
+    "options_ui": {
+        "page": "options.html",
+        "browser_style": true
+    },
+
+    "icons": {
+        "16": "icons/icon-16.png",
+        "24": "icons/icon-24.png",
+        "32": "icons/icon-32.png",
+        "48": "icons/icon-48.png",
+        "64": "icons/icon-64.png",
+        "96": "icons/icon-96.png",
+        "128": "icons/icon-128.png",
+        "256": "icons/icon-256.png"
+    },
+
+    "content_security_policy": "script-src 'self'; object-src 'self'"
+}
