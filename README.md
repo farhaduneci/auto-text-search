@@ -70,8 +70,8 @@ Click the extension icon in your toolbar to access settings:
 ### Local Development
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/firefox-search-highlight-extension.git
-   cd firefox-search-highlight-extension
+   git clone https://github.com/farhaduneci/auto-text-search.git
+   cd auto-text-search
    ```
 
 2. Load the extension in Firefox:
@@ -165,7 +165,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support & Contact
 
-- **Issues**: GitHub Issues
+- **Issues**: [GitHub Issues](https://github.com/farhaduneci/auto-text-search/issues)
 - **Telegram**: [@feriun](https://feriun.t.me)
 
 ---
@@ -174,6 +174,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ for Firefox users who love efficiency**
 
-[⭐ Star this repo](https://github.com/yourusername/firefox-search-highlight-extension) if you find it useful!
+[⭐ Star this repo](https://github.com/farhaduneci/auto-text-search) if you find it useful!
 
 </div>
