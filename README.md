@@ -152,12 +152,14 @@ Contributions are welcome! Here's how you can help:
 5. **Open** a Pull Request
 
 ### Areas for Improvement
-- [ ] Add more search engines
+- [ ] Support Opening highlighted links
+- [ ] Open the search in a new tab and switch to it
 - [ ] Implement custom search engine support
 - [ ] Add keyboard shortcut customization
 - [ ] Create options page for advanced settings
 - [ ] Add internationalization (i18n) support
 - [ ] Implement search history
+- [ ] You say it...
 
 ## 📄 License
 
