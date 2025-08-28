@@ -11,6 +11,26 @@
       font-size: 14px;
       background: #1a1a1a;
       color: #e0e0e0;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    /* Custom scrollbar for dark theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #2a2a2a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #666;
     }
 
     .header {
@@ -212,6 +232,40 @@
       margin-right: 6px;
       font-size: 14px;
     }
+
+    .feature-badge {
+      display: inline-block;
+      background: #ff6b6b;
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Disabled state for definition settings */
+    .setting-item.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -253,8 +307,8 @@
     <div class="section-title">Trigger Settings</div>
     <div class="setting-item">
       <div class="setting-label">
-        <span class="setting-title">Trigger key</span>
-        <span class="setting-description">Key to activate search</span>
+        <span class="setting-title">Search trigger key</span>
+        <span class="setting-description">Key to activate web search</span>
       </div>
       <select id="triggerKey" class="select">
         <option value="shift">Shift</option>
@@ -268,8 +322,50 @@
         <option value="cmd+alt">Cmd + Alt</option>
       </select>
     </div>
+  </div>
 
+  <div class="section">
+    <div class="section-title">
+      In-Page Definition
+      <span class="feature-badge">New</span>
+    </div>
+    <div class="setting-item">
+      <div class="setting-label">
+        <span class="setting-title">Enable definitions</span>
+        <span class="setting-description">Show word definitions in popup</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="enableInPageDefinition">
+        <span class="slider"></span>
+      </label>
+    </div>
 
+    <div class="setting-item">
+      <div class="setting-label">
+        <span class="setting-title">Definition trigger</span>
+        <span class="setting-description">Key to show definition</span>
+      </div>
+      <select id="definitionTriggerKey" class="select">
+        <option value="ctrl+d">Ctrl + D</option>
+        <option value="alt+d">Alt + D</option>
+        <option value="shift+d">Shift + D</option>
+        <option value="cmd+d">Cmd + D (Mac)</option>
+        <option value="ctrl+shift+d">Ctrl + Shift + D</option>
+        <option value="alt+shift+d">Alt + Shift + D</option>
+      </select>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-label">
+        <span class="setting-title">Definition source</span>
+        <span class="setting-description">Dictionary to use</span>
+      </div>
+      <select id="definitionSource" class="select">
+        <option value="dictionary">Dictionary API</option>
+        <option value="wiktionary">Wiktionary</option>
+        <option value="urban">Urban Dictionary</option>
+      </select>
+    </div>
   </div>
 
   <div class="section">
@@ -301,8 +397,8 @@
     <strong>How to use:</strong>
     <ol>
       <li>Highlight text on a webpage</li>
-      <li>Press your trigger key</li>
-      <li>Search opens automatically</li>
+      <li>Press search key for web search</li>
+      <li>Or press definition key for quick definition</li>
     </ol>
   </div>
 
