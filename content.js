@@ -310,7 +310,7 @@ class AutoTextSearch {
                 // Show loading state
                 this.showDefinitionLoading(selection);
             } else {
-                // Too many words for definition, maybe show a message
+                // Too many words for definition
                 this.showDefinitionMessage(
                     selection,
                     "Please select a single word or short phrase for definition."
@@ -322,12 +322,30 @@ class AutoTextSearch {
     showDefinitionLoading(selection) {
         const rect = selection.getRangeAt(0).getBoundingClientRect();
         
-        this.definitionPopup.innerHTML = `
-            <div style="text-align: center; color: #666;">
-                <div style="font-size: 24px; animation: spin 1s linear infinite;">⚙</div>
-                <p style="margin: 8px 0 0 0;">Loading definition...</p>
-            </div>
-        `;
+        // Clear existing content safely
+        while (this.definitionPopup.firstChild) {
+            this.definitionPopup.removeChild(this.definitionPopup.firstChild);
+        }
+
+        // Create loading container
+        const container = document.createElement("div");
+        container.style.textAlign = "center";
+        container.style.color = "#666";
+
+        // Create spinner
+        const spinner = document.createElement("div");
+        spinner.textContent = "⚙";
+        spinner.style.fontSize = "24px";
+        spinner.style.animation = "spin 1s linear infinite";
+
+        // Create loading text
+        const loadingText = document.createElement("p");
+        loadingText.textContent = "Loading definition...";
+        loadingText.style.margin = "8px 0 0 0";
+
+        container.appendChild(spinner);
+        container.appendChild(loadingText);
+        this.definitionPopup.appendChild(container);
 
         // Add spinning animation
         if (!document.getElementById("ats-spinner-style")) {
@@ -349,11 +367,21 @@ class AutoTextSearch {
     showDefinitionMessage(selection, message) {
         const rect = selection.getRangeAt(0).getBoundingClientRect();
         
-        this.definitionPopup.innerHTML = `
-            <div style="color: #666;">
-                <p style="margin: 0;">${message}</p>
-            </div>
-        `;
+        // Clear existing content safely
+        while (this.definitionPopup.firstChild) {
+            this.definitionPopup.removeChild(this.definitionPopup.firstChild);
+        }
+
+        // Create message container
+        const container = document.createElement("div");
+        container.style.color = "#666";
+
+        const messageText = document.createElement("p");
+        messageText.textContent = message;
+        messageText.style.margin = "0";
+
+        container.appendChild(messageText);
+        this.definitionPopup.appendChild(container);
 
         this.positionPopup(rect);
         this.definitionPopup.style.display = "block";
@@ -365,73 +393,97 @@ class AutoTextSearch {
     displayDefinition(data) {
         if (!data || !this.definitionPopup) return;
 
-        let content = "";
-        
-        if (data.error) {
-            content = `
-                <div style="color: #e74c3c;">
-                    <strong>Error:</strong> ${data.error}
-                </div>
-            `;
-        } else {
-            content = `
-                <div>
-                    <h3 style="margin: 0 0 12px 0; color: #2c3e50; font-size: 18px;">
-                        ${data.word}
-                    </h3>
-            `;
+        // Clear existing content safely
+        while (this.definitionPopup.firstChild) {
+            this.definitionPopup.removeChild(this.definitionPopup.firstChild);
+        }
 
+        const container = document.createElement("div");
+
+        if (data.error) {
+            // Error message
+            const errorDiv = document.createElement("div");
+            errorDiv.style.color = "#e74c3c";
+            
+            const errorStrong = document.createElement("strong");
+            errorStrong.textContent = "Error: ";
+            
+            const errorText = document.createTextNode(data.error);
+            
+            errorDiv.appendChild(errorStrong);
+            errorDiv.appendChild(errorText);
+            container.appendChild(errorDiv);
+        } else {
+            // Word title
+            const title = document.createElement("h3");
+            title.textContent = data.word;
+            title.style.margin = "0 0 12px 0";
+            title.style.color = "#2c3e50";
+            title.style.fontSize = "18px";
+            container.appendChild(title);
+
+            // Phonetic
             if (data.phonetic) {
-                content += `
-                    <p style="margin: 0 0 12px 0; color: #7f8c8d; font-style: italic;">
-                        ${data.phonetic}
-                    </p>
-                `;
+                const phonetic = document.createElement("p");
+                phonetic.textContent = data.phonetic;
+                phonetic.style.margin = "0 0 12px 0";
+                phonetic.style.color = "#7f8c8d";
+                phonetic.style.fontStyle = "italic";
+                container.appendChild(phonetic);
             }
 
+            // Meanings
             if (data.meanings && data.meanings.length > 0) {
                 data.meanings.forEach((meaning, index) => {
                     if (index < 2) { // Show only first 2 meanings
-                        content += `
-                            <div style="margin-bottom: 12px;">
-                                <strong style="color: #3498db; text-transform: capitalize;">
-                                    ${meaning.partOfSpeech}
-                                </strong>
-                                <p style="margin: 4px 0; color: #555;">
-                                    ${meaning.definition}
-                                </p>
-                        `;
-                        
+                        const meaningDiv = document.createElement("div");
+                        meaningDiv.style.marginBottom = "12px";
+
+                        // Part of speech
+                        const partOfSpeech = document.createElement("strong");
+                        partOfSpeech.textContent = meaning.partOfSpeech;
+                        partOfSpeech.style.color = "#3498db";
+                        partOfSpeech.style.textTransform = "capitalize";
+                        meaningDiv.appendChild(partOfSpeech);
+
+                        // Definition
+                        const definition = document.createElement("p");
+                        definition.textContent = meaning.definition;
+                        definition.style.margin = "4px 0";
+                        definition.style.color = "#555";
+                        meaningDiv.appendChild(definition);
+
+                        // Example
                         if (meaning.example) {
-                            content += `
-                                <p style="margin: 4px 0; padding-left: 16px; color: #7f8c8d; 
-                                         font-style: italic; border-left: 3px solid #ecf0f1;">
-                                    "${meaning.example}"
-                                </p>
-                            `;
+                            const example = document.createElement("p");
+                            example.textContent = `"${meaning.example}"`;
+                            example.style.margin = "4px 0";
+                            example.style.paddingLeft = "16px";
+                            example.style.color = "#7f8c8d";
+                            example.style.fontStyle = "italic";
+                            example.style.borderLeft = "3px solid #ecf0f1";
+                            meaningDiv.appendChild(example);
                         }
-                        
-                        content += `</div>`;
+
+                        container.appendChild(meaningDiv);
                     }
                 });
             }
 
-            content += `
-                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ecf0f1;">
-                    <a href="#" id="ats-search-more" style="color: #3498db; text-decoration: none; 
-                                                            font-size: 12px;">
-                        Search full definition →
-                    </a>
-                </div>
-            </div>
-            `;
-        }
+            // Search more link
+            const linkContainer = document.createElement("div");
+            linkContainer.style.marginTop = "12px";
+            linkContainer.style.paddingTop = "12px";
+            linkContainer.style.borderTop = "1px solid #ecf0f1";
 
-        this.definitionPopup.innerHTML = content;
+            const searchLink = document.createElement("a");
+            searchLink.href = "#";
+            searchLink.id = "ats-search-more";
+            searchLink.textContent = "Search full definition →";
+            searchLink.style.color = "#3498db";
+            searchLink.style.textDecoration = "none";
+            searchLink.style.fontSize = "12px";
 
-        // Add click handler for "search more" link
-        const searchLink = document.getElementById("ats-search-more");
-        if (searchLink) {
             searchLink.addEventListener("click", (e) => {
                 e.preventDefault();
                 this.hideDefinitionPopup();
@@ -442,7 +494,12 @@ class AutoTextSearch {
                 };
                 this.executeSearch();
             });
+
+            linkContainer.appendChild(searchLink);
+            container.appendChild(linkContainer);
         }
+
+        this.definitionPopup.appendChild(container);
     }
 
     positionPopup(rect) {
@@ -604,9 +661,12 @@ class AutoTextSearch {
     showSearchFeedback(text) {
         // Create temporary visual feedback
         const feedback = document.createElement("div");
-        feedback.textContent = `Searching: "${text.substring(0, 30)}${
-            text.length > 30 ? "..." : ""
-        }"`;
+        
+        // Safely add text content
+        const truncatedText = text.substring(0, 30);
+        const displayText = truncatedText + (text.length > 30 ? "..." : "");
+        feedback.textContent = `Searching: "${displayText}"`;
+        
         feedback.style.cssText = `
             position: fixed;
             top: 20px;
