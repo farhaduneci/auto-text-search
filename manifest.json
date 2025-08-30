@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Auto Text Search",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "description": "Automatically search highlighted text with customizable hotkeys and search engines",
 
     "browser_specific_settings": {
