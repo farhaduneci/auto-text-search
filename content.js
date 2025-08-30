@@ -23,6 +23,9 @@ class AutoTextSearch {
         this.keyPressTimeout = null;
         this.waitingForCombo = false;
         this.comboWaitTime = 100; // milliseconds to wait for combo keys
+        
+        // Constants
+        this.MAX_SEARCH_DISPLAY_LENGTH = 30; // Maximum characters to display in search feedback
 
         this.init();
     }
@@ -322,10 +325,15 @@ class AutoTextSearch {
     showDefinitionLoading(selection) {
         const rect = selection.getRangeAt(0).getBoundingClientRect();
         
+<<<<<<< Updated upstream
         // Clear existing content safely
         while (this.definitionPopup.firstChild) {
             this.definitionPopup.removeChild(this.definitionPopup.firstChild);
         }
+=======
+        // Clear existing content efficiently
+        this.definitionPopup.replaceChildren();
+>>>>>>> Stashed changes
 
         // Create loading container
         const container = document.createElement("div");
@@ -367,10 +375,15 @@ class AutoTextSearch {
     showDefinitionMessage(selection, message) {
         const rect = selection.getRangeAt(0).getBoundingClientRect();
         
+<<<<<<< Updated upstream
         // Clear existing content safely
         while (this.definitionPopup.firstChild) {
             this.definitionPopup.removeChild(this.definitionPopup.firstChild);
         }
+=======
+        // Clear existing content efficiently
+        this.definitionPopup.replaceChildren();
+>>>>>>> Stashed changes
 
         // Create message container
         const container = document.createElement("div");
@@ -393,10 +406,15 @@ class AutoTextSearch {
     displayDefinition(data) {
         if (!data || !this.definitionPopup) return;
 
+<<<<<<< Updated upstream
         // Clear existing content safely
         while (this.definitionPopup.firstChild) {
             this.definitionPopup.removeChild(this.definitionPopup.firstChild);
         }
+=======
+        // Clear existing content efficiently
+        this.definitionPopup.replaceChildren();
+>>>>>>> Stashed changes
 
         const container = document.createElement("div");
 
@@ -662,9 +680,15 @@ class AutoTextSearch {
         // Create temporary visual feedback
         const feedback = document.createElement("div");
         
+<<<<<<< Updated upstream
         // Safely add text content
         const truncatedText = text.substring(0, 30);
         const displayText = truncatedText + (text.length > 30 ? "..." : "");
+=======
+        // Use constant for text truncation
+        const truncatedText = text.substring(0, this.MAX_SEARCH_DISPLAY_LENGTH);
+        const displayText = truncatedText + (text.length > this.MAX_SEARCH_DISPLAY_LENGTH ? "..." : "");
+>>>>>>> Stashed changes
         feedback.textContent = `Searching: "${displayText}"`;
         
         feedback.style.cssText = `
